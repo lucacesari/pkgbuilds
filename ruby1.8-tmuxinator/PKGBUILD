@@ -1,0 +1,25 @@
+# Contributor: Luca Cesari < mirshann AT freakmind DOT org>
+pkgname=ruby1.8-tmuxinator
+pkgver=0.3.4
+pkgrel=1
+pkgdesc="Manage complex tmux sessions easily"
+arch=(any)
+url="https://github.com/aziz/tmuxinator"
+license=(MIT)
+depends=(ruby1.8)
+makedepends=(rubygems1.8)
+source=(http://rubygems.org/downloads/tmuxinator-$pkgver.gem)
+noextract=(tmuxinator-$pkgver.gem)
+md5sums=(a8d5fe2c64b132fa57802605cf944234)
+
+build() {
+    cd $srcdir
+    
+    local _gemdir="$(ruby-1.8 -rubygems -e'puts Gem.default_dir')"
+
+    install -d $pkgdir/usr/bin/
+
+    gem-1.8 install --ignore-dependencies --verbose -i "$pkgdir$_gemdir" -n "$pkgdir"/usr/bin tmuxinator-$pkgver.gem
+}
+
+# vim:set ts=2 sw=2 et:
